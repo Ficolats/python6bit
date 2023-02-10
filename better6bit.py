@@ -46,17 +46,21 @@ keys=list(normaldict.keys())
 values, oldvalues=list(normaldict.values()),list(normaldict.values())
 output=str("")
 
-
-def encrypt():
-    x=input("Input for encryption: ")
-    x.lower()
-    import random
+def makenewdict():
     #make random integer to create a new dict
     randomint=random.randint(1, len(normaldict))
     for i in range(1, randomint+1):
         values.insert(-1, values[0])
         values.pop(0)
     newdict = dict(map(lambda i,j : (i,j) , keys,values))
+    return newdict
+
+
+def encrypt():
+    x=input("Input for encryption: ")
+    x.lower()
+    import random
+    newdict=makenewdict()
     #loop through the input and encode it
     for i in x:
         global output
@@ -66,11 +70,16 @@ def encrypt():
     return output
 
 
-def decrypt():
-    x=input("Input for decryption: ")
-    #split input every 6 chars
+def splitsix(x):
     length = 6
     x=[x[i:i+length] for i in range(0, len(x), length)]
+    return x
+    
+    
+def decrypt():
+    decryptmsg=input("Input for decryption: ")
+    #split input every 6 chars
+    splitmsg=splitsix(decryptmsg)
     newa=list(normaldict.keys())[list(normaldict.values()).index(x[0])]
     x.pop(0)
     diff=keys.index("a")-keys.index(newa)
