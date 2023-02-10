@@ -48,6 +48,7 @@ output=str("")
 
 def makenewdict():
     #make random integer to create a new dict
+    import random
     randomint=random.randint(1, len(normaldict))
     for i in range(1, randomint+1):
         values.insert(-1, values[0])
@@ -59,7 +60,7 @@ def makenewdict():
 def encrypt():
     x=input("Input for encryption: ")
     x.lower()
-    import random
+    
     newdict=makenewdict()
     #loop through the input and encode it
     for i in x:
@@ -80,15 +81,15 @@ def decrypt():
     decryptmsg=input("Input for decryption: ")
     #split input every 6 chars
     splitmsg=splitsix(decryptmsg)
-    newa=list(normaldict.keys())[list(normaldict.values()).index(x[0])]
-    x.pop(0)
+    newa=list(normaldict.keys())[list(normaldict.values()).index(splitmsg[0])]
+    splitmsg.pop(0)
     diff=keys.index("a")-keys.index(newa)
     #find the dict that was used to encrypt
     for i in range(1, abs(diff)+1):
         oldvalues.insert(-1, oldvalues[0])
         oldvalues.pop(0)
     solutiondict=dict(map(lambda i,j : (i,j) , keys,oldvalues))
-    for i in x:
+    for i in splitmsg:
         global output
         output=str(output)+list(solutiondict.keys())[list(solutiondict.values()).index(i)]
     return str(output)
